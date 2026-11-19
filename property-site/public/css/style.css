@@ -31,7 +31,7 @@ a { color: inherit; }
 .topbar .wrap { display: flex; align-items: center; justify-content: space-between; min-height: 56px; }
 .brand img { display: block; height: 34px; width: auto; }
 .brand { display: flex; align-items: center; font-weight: 600; font-size: 18px; text-decoration: none; letter-spacing: .01em; }
-.topbar a.wa-link { font-size: 14px; text-decoration: none; background: var(--sage); color: var(--forest); padding: 6px 14px; border-radius: 999px; font-weight: 600; }
+.topbar .wa-link { font-size: 14px; text-decoration: none; background: var(--sage); color: var(--forest); padding: 6px 14px; border-radius: 999px; font-weight: 600; border: 0; font-family: inherit; cursor: pointer; }
 
 /* ---- Filters ---- */
 .filters { background: var(--card); border-bottom: 1px solid var(--line); padding: 14px 0 12px; }
@@ -72,7 +72,7 @@ a { color: inherit; }
 
 /* ---- Unit page ---- */
 .back { display: inline-block; margin: 12px 0 8px; color: var(--muted); text-decoration: none; font-size: 14px; }
-.gallery { display: flex; gap: 8px; overflow-x: auto; scroll-snap-type: x mandatory; border-radius: var(--radius);
+.gallery { margin-top: 12px; display: flex; gap: 8px; overflow-x: auto; scroll-snap-type: x mandatory; border-radius: var(--radius);
   -webkit-overflow-scrolling: touch; }
 .gallery > * { flex: 0 0 92%; scroll-snap-align: center; aspect-ratio: 4/3; border-radius: var(--radius);
   object-fit: cover; background: #ddd; }
@@ -114,3 +114,22 @@ a { color: inherit; }
   .u-layout .panel:first-child { margin-top: 0; }
   .sticky { position: static; background: none; padding: 0; }
 }
+
+/* ---- Staff / login ---- */
+.card-link { display: block; text-decoration: none; color: inherit; }
+.card-actions { display: flex; gap: 8px; padding: 0 14px 14px; }
+.card-actions .btn { flex: 1; }
+.me { margin: 0 0 12px; }
+.me label, .lbl { display: block; font-size: 12px; color: var(--muted); margin-bottom: 3px; }
+input[type=tel], input[type=password], input[type=text] { width: 100%; height: 44px; border: 1px solid var(--line); border-radius: 10px;
+  background: var(--card); padding: 0 12px; font: inherit; color: var(--ink); }
+.login { max-width: 380px; margin: 48px auto; background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 22px; }
+.login h1 { font-size: 20px; margin: 0 0 4px; }
+.err { color: var(--russet); font-size: 14px; margin: 8px 0 0; }
+.staffbar { background: var(--accent-soft); border-radius: var(--radius); padding: 12px; margin: 4px 0 0; }
+.staffbar b { display: block; font-size: 13px; color: var(--forest); margin-bottom: 8px; }
+.staffbar .row { display: flex; gap: 8px; flex-wrap: wrap; }
+.staffbar .btn { flex: 1; min-width: 140px; }
+.internal { border: 1px dashed var(--russet); }
+.internal h2 { color: var(--russet); }
+@media (min-width: 900px) { .card-actions .btn { flex: 0 1 auto; } }

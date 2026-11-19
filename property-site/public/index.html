@@ -4,9 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Tendiz Property - Find your unit</title>
-<meta name="description" content="Browse available units, filter by budget, bedrooms, compound and delivery. Chat with me on WhatsApp.">
+<meta name="robots" content="noindex, nofollow">
 <meta property="og:title" content="Tendiz Property">
-<meta property="og:description" content="Find a unit that fits your budget.">
 <meta name="theme-color" content="#1d2f1f">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap">
@@ -16,11 +15,15 @@
 <body>
 <header class="topbar"><div class="wrap">
   <a class="brand" href="./" aria-label="Tendiz Property"><img src="img/logo-cream.png" alt="Tendiz" width="110" height="34"></a>
-  <a class="wa-link" id="top-wa" href="#">WhatsApp</a>
+  <button class="wa-link" id="logout" type="button" hidden>Log out</button>
 </div></header>
 
+<div class="wrap" id="gate"></div>
+<div id="staff" hidden>
 <section class="filters"><div class="wrap">
   <h1 id="heading">Find your unit</h1>
+  <div class="me"><label for="mywa">Your WhatsApp (clients will message you)</label>
+    <input id="mywa" type="tel" inputmode="tel" placeholder="01012345678" autocomplete="tel"></div>
   <form id="f" class="grid-f" onsubmit="return false">
     <div class="field"><label for="budget">Max budget</label>
       <select id="budget"></select></div>
@@ -37,7 +40,6 @@
     <span class="count" id="count" aria-live="polite"></span>
     <div class="btns">
       <button class="btn small" id="reset" type="button">Reset</button>
-      <button class="btn small primary" id="share" type="button">Share this search</button>
     </div>
   </div>
 </div></section>
@@ -45,6 +47,7 @@
 <main class="wrap">
   <div class="cards" id="cards"></div>
 </main>
+</div>
 <noscript><p class="wrap">Please enable JavaScript to browse units.</p></noscript>
 <script src="js/common.js"></script>
 <script src="js/home.js"></script>

@@ -38,7 +38,7 @@
     var t = norm(raw), l = t.toLowerCase();
     var u = { id: '', compound: '', type: '', area: 0, garden: 0, bedrooms: 0, bathrooms: 0, finishing: '',
       delivery: '', totalPrice: 0, downPayment: 0, installments: { years: 0, frequency: 'quarterly' },
-      photosFolder: '', images: [], notes: '' };
+      photosFolder: '', images: [], notes: '', internalNotes: '' };
     var m;
 
     // --- compound
@@ -130,14 +130,20 @@
     m = first(/https?:\/\/[^\s)]+/i, t);
     if (m) u.photosFolder = m[0].replace(/[.,;!]+$/, '');
     m = first(/(?:notes?|ملاحظات)\s*[:\-]\s*([\s\S]+)$/i, t);
-    if (m) u.notes = m[1].trim();
+    if (m) u.internalNotes = m[1].trim(); // safe default: not shown to clients
 
     u.id = makeId(u);
     return u;
   }
 
+  /* Ends in a random code so a client who has one unit link cannot guess the others. */
+  function rand(n) {
+    var c = 'abcdefghjkmnpqrstuvwxyz23456789', s = '';
+    for (var i = 0; i < n; i++) s += c.charAt(Math.floor(Math.random() * c.length));
+    return s;
+  }
   function makeId(u) {
-    return slug([u.compound, u.type, u.bedrooms ? u.bedrooms + 'br' : '', u.area || ''].filter(Boolean).join(' '));
+    return slug([u.compound, u.type, u.bedrooms ? u.bedrooms + 'br' : '', u.area || ''].filter(Boolean).join(' ')) + '-' + rand(6);
   }
   function missing(u) {
     var out = [];

@@ -45,14 +45,16 @@
     var tags = [u.bedrooms + ' bed', u.bathrooms + ' bath', u.area + ' m²'];
     if (u.garden) tags.push(u.garden + ' m² garden');
     tags.push(u.finishing);
-    return '<a class="card" href="unit.html?id=' + encodeURIComponent(u.id) + '">' +
+    return '<div class="card"><a class="card-link" href="unit.html?id=' + encodeURIComponent(u.id) + '">' +
       '<div class="thumb"><span class="badge' + (ready ? '' : ' off') + '">' +
       C.esc(ready ? 'Ready' : 'Off-plan · ' + C.deliveryLabel(u)) + '</span>' + img + '</div>' +
       '<div class="card-body"><div class="comp">' + C.esc(u.compound) + '</div>' +
       '<h2 class="type">' + C.esc(u.type) + '</h2>' +
       '<div class="price">EGP ' + C.short(u.totalPrice) + '</div><div class="pay">' + C.esc(pay) + '</div>' +
       '<div class="tags">' + tags.filter(Boolean).map(function (t) {
-        return '<span class="tag">' + C.esc(t) + '</span>'; }).join('') + '</div></div></a>';
+        return '<span class="tag">' + C.esc(t) + '</span>'; }).join('') + '</div></div></a>' +
+      '<div class="card-actions"><a class="btn small wa" target="_blank" rel="noopener" data-send="' + C.esc(u.id) + '" href="#">Send to client</a>' +
+      '<button class="btn small" type="button" data-copy="' + C.esc(u.id) + '">Copy link</button></div></div>';
   }
   function render() {
     var s = state();
@@ -64,38 +66,46 @@
     try { history.replaceState(null, '', location.pathname + query(s)); } catch (e) {}
     $('heading').textContent = s.budget ? 'Units up to EGP ' + C.short(s.budget) : 'Find your unit';
   }
-  function share() {
-    var url = location.origin + location.pathname + query(state());
-    var s = state();
-    var text = 'Units' + (s.budget ? ' up to EGP ' + C.short(s.budget) : '') + ': ' + url;
-    if (navigator.share) { navigator.share({ title: document.title, url: url }).catch(function () {}); return; }
-    if (navigator.clipboard) navigator.clipboard.writeText(url).then(function () { flash('Link copied'); },
-      function () { prompt('Copy this link:', url); });
-    else prompt('Copy this link:', url);
-  }
-  function flash(msg) {
-    var b = $('share'), old = b.textContent; b.textContent = msg; setTimeout(function () { b.textContent = old; }, 1600);
+  function bind() {
+    var cards = $('cards');
+    cards.addEventListener('click', function (e) {
+      var c = e.target.closest('[data-copy]');
+      if (c) C.copy(C.clientLink(c.getAttribute('data-copy')), c, 'Copy link');
+    });
+    // build the WhatsApp href at click time so a freshly typed number is used
+    cards.addEventListener('click', function (e) {
+      var s = e.target.closest('[data-send]');
+      if (s) s.href = C.sendLink(s.getAttribute('data-send'));
+    });
   }
 
-  C.load().then(function (d) {
-    data = d; units = d.units;
-    var st = d.settings || {};
-    document.title = (st.siteTitle || 'Tendiz Property') + ' - Find your unit';
-    var wa = String(st.whatsapp || '').replace(/\D/g, '');
-    if (wa) $('top-wa').href = 'https://wa.me/' + wa + '?text=' + encodeURIComponent('Hi, I saw your listings and would like some help finding a unit.');
-    else $('top-wa').style.display = 'none';
-
+  function start(d) {
+    units = d.units;
+    $('gate').hidden = true; $('staff').hidden = false; $('logout').hidden = false;
     var u0 = readUrl();
     budgetOptions(u0.budget);
     var comps = Array.from(new Set(units.map(function (u) { return u.compound; }))).sort();
-    $('compound').innerHTML += comps.map(function (c) { return '<option>' + C.esc(c) + '</option>'; }).join('');
+    $('compound').innerHTML = '<option value="">All compounds</option>' + comps.map(function (c) { return '<option>' + C.esc(c) + '</option>'; }).join('');
     $('budget').value = u0.budget || '';
     $('beds').value = u0.beds; $('compound').value = u0.compound; $('delivery').value = u0.delivery;
-    ['budget', 'beds', 'compound', 'delivery'].forEach(function (id) { $(id).addEventListener('change', render); });
-    $('reset').onclick = function () { ['budget', 'beds', 'compound', 'delivery'].forEach(function (id) { $(id).value = ''; }); render(); };
-    $('share').onclick = share;
+    if (!start.bound) {
+      start.bound = true;
+      ['budget', 'beds', 'compound', 'delivery'].forEach(function (id) { $(id).addEventListener('change', render); });
+      $('reset').onclick = function () { ['budget', 'beds', 'compound', 'delivery'].forEach(function (id) { $(id).value = ''; }); render(); };
+      $('mywa').value = C.store('tz_wa');
+      $('mywa').addEventListener('input', function () { C.store('tz_wa', this.value); });
+      $('logout').onclick = function () { C.logout().then(function () { location.reload(); }); };
+      bind();
+    }
     render();
-  }).catch(function (e) {
-    $('cards').innerHTML = '<div class="empty" style="grid-column:1/-1">Could not load units. ' + C.esc(e.message) + '</div>';
-  });
+  }
+
+  function boot() {
+    C.load().then(start).catch(function (e) {
+      if (e.auth) { $('staff').hidden = true; $('gate').hidden = false; C.loginForm($('gate'), boot); return; }
+      $('gate').hidden = false;
+      $('gate').innerHTML = '<div class="empty">Could not load units. ' + C.esc(e.message) + '</div>';
+    });
+  }
+  boot();
 })();

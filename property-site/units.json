@@ -3,11 +3,11 @@
     "siteTitle": "Tendiz Property",
     "agentName": "Your Name",
     "whatsapp": "201000000000",
-    "_whatsappHelp": "Digits only, with country code, no + or spaces. Egypt example: 201012345678"
+    "_help": "whatsapp = company default number (digits, country code, no +). Clients message the employee who sent the link when it carries their own number."
   },
   "units": [
     {
-      "id": "badya-ground-3br-150",
+      "id": "badya-ground-3br-150-m9epxb",
       "compound": "Badya",
       "type": "Ground apartment",
       "area": 150,
@@ -18,13 +18,17 @@
       "delivery": "2028-06",
       "totalPrice": 7500000,
       "downPayment": 750000,
-      "installments": { "years": 8, "frequency": "quarterly" },
+      "installments": {
+        "years": 8,
+        "frequency": "quarterly"
+      },
       "photosFolder": "https://drive.google.com/",
       "images": [],
-      "notes": "SAMPLE DATA - replace with your real units."
+      "notes": "SAMPLE DATA - replace with your real units.",
+      "internalNotes": "SAMPLE internal note: owner is flexible by ~3%. Commission 2%. Staff only, never shown to clients."
     },
     {
-      "id": "badya-apartment-2br-110",
+      "id": "badya-apartment-2br-110-c5udnv",
       "compound": "Badya",
       "type": "Apartment",
       "area": 110,
@@ -35,13 +39,16 @@
       "delivery": "2028",
       "totalPrice": 4200000,
       "downPayment": 420000,
-      "installments": { "years": 9, "frequency": "quarterly" },
+      "installments": {
+        "years": 9,
+        "frequency": "quarterly"
+      },
       "photosFolder": "",
       "images": [],
       "notes": "SAMPLE DATA."
     },
     {
-      "id": "mountain-view-icity-duplex-4br-220",
+      "id": "mountain-view-icity-duplex-4br-220-b8tgbc",
       "compound": "Mountain View iCity",
       "type": "Duplex",
       "area": 220,
@@ -52,13 +59,15 @@
       "delivery": "ready",
       "totalPrice": 11800000,
       "downPayment": 11800000,
-      "installments": { "years": 0 },
+      "installments": {
+        "years": 0
+      },
       "photosFolder": "https://drive.google.com/",
       "images": [],
       "notes": "SAMPLE DATA. Ready to move - cash price."
     },
     {
-      "id": "sodic-east-apartment-3br-165",
+      "id": "sodic-east-apartment-3br-165-qqchcu",
       "compound": "SODIC East",
       "type": "Apartment",
       "area": 165,
@@ -69,13 +78,16 @@
       "delivery": "ready",
       "totalPrice": 8900000,
       "downPayment": 2670000,
-      "installments": { "years": 4, "frequency": "monthly" },
+      "installments": {
+        "years": 4,
+        "frequency": "monthly"
+      },
       "photosFolder": "",
       "images": [],
       "notes": "SAMPLE DATA."
     },
     {
-      "id": "zed-east-studio-1br-70",
+      "id": "zed-east-studio-1br-70-qb5vd9",
       "compound": "Zed East",
       "type": "Studio",
       "area": 70,
@@ -86,7 +98,10 @@
       "delivery": "2027-12",
       "totalPrice": 3100000,
       "downPayment": 310000,
-      "installments": { "years": 8, "frequency": "quarterly" },
+      "installments": {
+        "years": 8,
+        "frequency": "quarterly"
+      },
       "photosFolder": "",
       "images": [],
       "notes": "SAMPLE DATA."

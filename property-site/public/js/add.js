@@ -8,23 +8,32 @@
     ['finishing', 'Finishing', 'text'], ['delivery', 'Delivery ("ready", "2028" or "2028-06")', 'text'],
     ['totalPrice', 'Total price (EGP)', 'number'], ['downPayment', 'Down payment (EGP)', 'number'],
     ['years', 'Installment years (0 = none)', 'number'], ['frequency', 'Payment frequency', 'select'],
-    ['photosFolder', 'Photos folder link', 'text'], ['id', 'Unit ID (used in the link)', 'text'],
-    ['notes', 'Notes', 'textarea']
+    ['photosFolder', 'Photos folder link', 'text'], ['id', 'Unit ID (keep the random ending: it keeps the link private)', 'text'],
+    ['notes', 'Notes for the client (shown on the unit page)', 'textarea'], ['internalNotes', 'Internal notes (staff only: owner, commission, etc.)', 'textarea']
   ];
 
-  fetch('units.json', { cache: 'no-cache' }).then(function (r) { return r.json(); }).then(function (d) {
-    existing = d;
-    $('loadnote').textContent = 'Merged with your current ' + d.units.length + ' units.';
-  }).catch(function () {
-    $('loadnote').textContent = 'Could not load units.json from the site - the output below contains only this unit. Add it inside the "units" list yourself.';
-  });
+  function loadExisting() {
+    return Common.api('/api/export').then(function (r) {
+      if (r.status === 401) { var e = new Error('login'); e.auth = true; throw e; }
+      if (r.status !== 200 || !r.body.units) throw new Error('load');
+      var d = r.body;
+      existing = d;
+      $('loadnote').textContent = 'Merged with your current ' + d.units.length + ' units.';
+      $('gate').hidden = true; $('main').hidden = false;
+    }).catch(function (e) {
+      if (e.auth) { $('main').hidden = true; $('gate').hidden = false; Common.loginForm($('gate'), loadExisting); return; }
+      $('gate').hidden = true; $('main').hidden = false;
+      $('loadnote').textContent = 'Could not load the current units. The output below contains only this unit; add it inside the "units" list yourself.';
+    });
+  }
+  loadExisting();
 
   function known() { return existing ? existing.units.map(function (u) { return u.compound; }) : []; }
 
   function buildForm(u, miss) {
     var vals = Object.assign({}, u, { years: u.installments.years, frequency: u.installments.frequency || 'quarterly' });
     $('form').innerHTML = FIELDS.map(function (f) {
-      var k = f[0], cls = (miss.indexOf(k) >= 0 ? 'miss ' : '') + 'field' + (/notes|photosFolder|id|delivery/.test(k) ? ' full' : '');
+      var k = f[0], cls = (miss.indexOf(k) >= 0 ? 'miss ' : '') + 'field' + (/notes|Notes|photosFolder|id|delivery/.test(k) ? ' full' : '');
       var v = Common.esc(vals[k] == null ? '' : vals[k]), c;
       if (f[2] === 'select') c = '<select id="f_' + k + '"><option value="quarterly"' + (v === 'quarterly' ? ' selected' : '') + '>Quarterly</option><option value="monthly"' + (v === 'monthly' ? ' selected' : '') + '>Monthly</option></select>';
       else if (f[2] === 'textarea') c = '<textarea id="f_' + k + '" style="min-height:80px">' + v + '</textarea>';
@@ -42,7 +51,7 @@
       bedrooms: +val('bedrooms') || 0, bathrooms: +val('bathrooms') || 0, finishing: val('finishing'),
       delivery: val('delivery'), totalPrice: +val('totalPrice') || 0, downPayment: +val('downPayment') || 0,
       installments: years ? { years: years, frequency: val('frequency') } : { years: 0 },
-      photosFolder: val('photosFolder'), images: unit.images || [], notes: val('notes')
+      photosFolder: val('photosFolder'), images: unit.images || [], notes: val('notes'), internalNotes: val('internalNotes')
     };
     if (unit.installments.amount && years === unit.installments.years) u.installments.amount = unit.installments.amount;
     unit = u;
