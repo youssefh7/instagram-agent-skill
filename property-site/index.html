@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Unit Finder - Apartments, Duplexes &amp; Villas in Egypt</title>
+<meta name="description" content="Browse available units, filter by budget, bedrooms, compound and delivery. Chat with me on WhatsApp.">
+<meta property="og:title" content="Unit Finder">
+<meta property="og:description" content="Find a unit that fits your budget.">
+<meta name="theme-color" content="#1d5c4d">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="topbar"><div class="wrap">
+  <a class="brand" href="./" id="brand">Unit Finder</a>
+  <a class="wa-link" id="top-wa" href="#">WhatsApp</a>
+</div></header>
+
+<section class="filters"><div class="wrap">
+  <h1 id="heading">Find your unit</h1>
+  <form id="f" class="grid-f" onsubmit="return false">
+    <div class="field"><label for="budget">Max budget</label>
+      <select id="budget"></select></div>
+    <div class="field"><label for="beds">Bedrooms</label>
+      <select id="beds"><option value="">Any</option><option value="1">1</option><option value="2">2</option>
+        <option value="3">3</option><option value="4">4+</option></select></div>
+    <div class="field"><label for="compound">Compound</label>
+      <select id="compound"><option value="">All compounds</option></select></div>
+    <div class="field"><label for="delivery">Delivery</label>
+      <select id="delivery"><option value="">Any</option><option value="ready">Ready to move</option>
+        <option value="offplan">Off-plan</option></select></div>
+  </form>
+  <div class="bar">
+    <span class="count" id="count" aria-live="polite"></span>
+    <div class="btns">
+      <button class="btn small" id="reset" type="button">Reset</button>
+      <button class="btn small primary" id="share" type="button">Share this search</button>
+    </div>
+  </div>
+</div></section>
+
+<main class="wrap">
+  <div class="cards" id="cards"></div>
+</main>
+<noscript><p class="wrap">Please enable JavaScript to browse units.</p></noscript>
+<script src="js/common.js"></script>
+<script src="js/home.js"></script>
+</body>
+</html>

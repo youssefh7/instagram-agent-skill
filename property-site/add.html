@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Add a unit</title>
+<link rel="stylesheet" href="css/style.css">
+<style>
+  textarea, input[type=text], input[type=number], select { width: 100%; border: 1px solid var(--line); border-radius: 10px; padding: 10px; font: inherit; background: #fff; color: var(--ink); }
+  textarea { min-height: 150px; }
+  .g { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .g .full { grid-column: 1 / -1; }
+  .warn { background: #fff4de; border: 1px solid #f0d9a8; border-radius: 10px; padding: 10px; font-size: 14px; margin: 10px 0 0; }
+  .miss input, .miss select { border-color: #d98a1f; background: #fffaf0; }
+  ol.steps { padding-left: 20px; margin: 0; color: var(--muted); font-size: 14px; }
+  .out { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 12px; min-height: 220px; }
+</style>
+</head>
+<body>
+<header class="topbar"><div class="wrap"><a class="brand" href="./">← Back to site</a><span>Add a unit</span></div></header>
+<main class="wrap">
+  <section class="panel">
+    <h2>1. Paste the listing message</h2>
+    <textarea id="msg" placeholder="Paste the WhatsApp / developer message here…"></textarea>
+    <div class="actions"><button class="btn primary" id="parse" type="button">Read message</button></div>
+  </section>
+
+  <section class="panel" id="review" hidden>
+    <h2>2. Check the details</h2>
+    <div id="warn" class="warn" hidden></div>
+    <div class="g" id="form" style="margin-top:12px"></div>
+  </section>
+
+  <section class="panel" id="result" hidden>
+    <h2>3. Publish</h2>
+    <ol class="steps">
+      <li>Tap <b>Copy units.json</b> (or Download).</li>
+      <li>Replace the contents of <code>units.json</code> in your project with it.</li>
+      <li>Re-deploy (see README). The unit appears on the site.</li>
+    </ol>
+    <div class="actions">
+      <button class="btn primary" id="copy" type="button">Copy units.json</button>
+      <button class="btn" id="dl" type="button">Download units.json</button>
+    </div>
+    <p class="fine" id="loadnote"></p>
+    <textarea class="out" id="out" readonly></textarea>
+  </section>
+</main>
+<script src="js/common.js"></script>
+<script src="js/parse.js"></script>
+<script src="js/add.js"></script>
+</body>
+</html>
