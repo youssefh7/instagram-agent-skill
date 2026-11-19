@@ -1,4 +1,4 @@
-# Unit Finder
+# Tendiz Property - unit finder
 
 A static property-listings site. No build step, no dependencies, no database.
 Clients filter by budget, bedrooms, compound and ready/off-plan, open a unit page,
@@ -114,4 +114,4 @@ Open http://localhost:8000. (Opening the files by double-click won't work: the b
 
 ## Restyling
 
-All colors, radius and font are variables at the top of `css/style.css`.
+Colors follow the Tendiz brand PDF (cream, sage, forest, russet, lime) and the font is Poppins. They are variables at the top of `css/style.css`.

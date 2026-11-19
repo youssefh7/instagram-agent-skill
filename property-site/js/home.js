@@ -80,8 +80,8 @@
   C.load().then(function (d) {
     data = d; units = d.units;
     var st = d.settings || {};
-    document.title = (st.siteTitle || 'Unit Finder') + ' - Apartments & Villas in Egypt';
-    $('brand').textContent = st.siteTitle || 'Unit Finder';
+    document.title = (st.siteTitle || 'Tendiz Property') + ' - Find your unit';
+    $('brand').textContent = st.siteTitle || 'Tendiz Property';
     var wa = String(st.whatsapp || '').replace(/\D/g, '');
     if (wa) $('top-wa').href = 'https://wa.me/' + wa + '?text=' + encodeURIComponent('Hi, I saw your listings and would like some help finding a unit.');
     else $('top-wa').style.display = 'none';

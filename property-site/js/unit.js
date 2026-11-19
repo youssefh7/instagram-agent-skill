@@ -64,7 +64,7 @@
 
   C.load().then(function (d) {
     var st = d.settings || {};
-    document.getElementById('brand').textContent = st.siteTitle || 'Unit Finder';
+    document.getElementById('brand').textContent = st.siteTitle || 'Tendiz Property';
     document.getElementById('foot').textContent = st.agentName || '';
     var id = new URLSearchParams(location.search).get('id');
     var u = d.units.filter(function (x) { return x.id === id; })[0];
