@@ -61,7 +61,7 @@
     $('count').textContent = list.length + (list.length === 1 ? ' unit' : ' units') + ' found';
     $('cards').innerHTML = list.length ? list.map(card).join('') :
       '<div class="empty" style="grid-column:1/-1"><b>No units match.</b><br>Try a higher budget or reset the filters.</div>';
-    history.replaceState(null, '', location.pathname + query(s));
+    try { history.replaceState(null, '', location.pathname + query(s)); } catch (e) {}
     $('heading').textContent = s.budget ? 'Units up to EGP ' + C.short(s.budget) : 'Find your unit';
   }
   function share() {

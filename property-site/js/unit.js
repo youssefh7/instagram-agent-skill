@@ -65,7 +65,7 @@
   C.load().then(function (d) {
     var st = d.settings || {};
     document.getElementById('foot').textContent = st.agentName || '';
-    var id = new URLSearchParams(location.search).get('id');
+    var id = new URLSearchParams(location.search).get('id') || decodeURIComponent(location.hash.slice(1));
     var u = d.units.filter(function (x) { return x.id === id; })[0];
     if (!u) {
       app.innerHTML = '<div class="empty"><b>This unit is no longer available.</b><br><br><a class="btn primary" href="./">See available units</a></div>';
